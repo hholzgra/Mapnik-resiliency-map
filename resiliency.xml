@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Map [
+<!ENTITY datasource-settings SYSTEM "inc/datasource-settings.xml.inc">
+]>
+
+<Map srs="+init=epsg:3857" background-color="transparent">
+  
+  <Style name="framed-polygon">
+    <Rule>
+      <PolygonSymbolizer fill="[color]" fill-opacity="0.3" />
+      <LineSymbolizer stroke="black" stroke-width="2" />
+    </Rule>
+  </Style>
+  
+  <Layer name="landuse-construction">
+    <StyleName>framed-polygon</StyleName>
+    <Datasource>
+      <Parameter name="table">
+	(SELECT way, 'red' as color
+           FROM planet_osm_polygon
+          WHERE landuse = 'construction'
+	) AS way
+      </Parameter>
+      <Parameter name="geometry_field">way</Parameter>
+      &datasource-settings;
+    </Datasource>
+  </Layer>
+
+  <Layer name="building-construction">
+    <StyleName>framed-polygon</StyleName>
+    <Datasource>
+      <Parameter name="table">
+	(SELECT way, 'purple' as color
+           FROM planet_osm_polygon
+          WHERE building = 'construction'
+	) AS way
+      </Parameter>
+      <Parameter name="geometry_field">way</Parameter>
+      &datasource-settings;
+    </Datasource>
+  </Layer>
+
+  <Layer name="building-soft-storey">
+    <StyleName>framed-polygon</StyleName>
+    <Datasource>
+      <Parameter name="table">
+	(SELECT way, 'green' as color
+           FROM planet_osm_polygon
+          WHERE building IS NOT NULL
+	    AND tags->'building:soft_storey' = 'yes'
+	) AS way
+      </Parameter>
+      <Parameter name="geometry_field">way</Parameter>
+      &datasource-settings;
+    </Datasource>
+  </Layer>
+
+  <Layer name="amenity-school">
+    <StyleName>framed-polygon</StyleName>
+    <Datasource>
+      <Parameter name="table">
+	(SELECT way, 'black' as color
+           FROM planet_osm_polygon
+          WHERE building IS NOT NULL
+	    AND amenity = 'school'
+	) AS way
+      </Parameter>
+      <Parameter name="geometry_field">way</Parameter>
+      &datasource-settings;
+    </Datasource>
+  </Layer>
+
+  
+</Map>
