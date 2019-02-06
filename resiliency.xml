@@ -61,14 +61,100 @@
       <Parameter name="table">
 	(SELECT way, 'black' as color
            FROM planet_osm_polygon
-          WHERE building IS NOT NULL
-	    AND amenity = 'school'
+          WHERE amenity = 'school'
 	) AS way
       </Parameter>
       <Parameter name="geometry_field">way</Parameter>
       &datasource-settings;
     </Datasource>
   </Layer>
+
+  <Layer name="shop-car-repair">
+    <StyleName>framed-polygon</StyleName>
+    <Datasource>
+      <Parameter name="table">
+	(SELECT way, 'darkblue' as color
+           FROM planet_osm_polygon
+	  WHERE shop='car_repair'
+	) AS way
+      </Parameter>
+      <Parameter name="geometry_field">way</Parameter>
+      &datasource-settings;
+    </Datasource>
+  </Layer>
+
+  <Layer name="amenity-fuel">
+    <StyleName>framed-polygon</StyleName>
+    <Datasource>
+      <Parameter name="table">
+	(SELECT way, 'blue' as color
+           FROM planet_osm_polygon
+          WHERE amenity = 'fuel'
+	) AS way
+      </Parameter>
+      <Parameter name="geometry_field">way</Parameter>
+      &datasource-settings;
+    </Datasource>
+  </Layer>
+
+  <Style name="hospital-symbol">
+    <Rule>
+      <MarkersSymbolizer file="symbols/hospital.svg" fill="red"/>
+    </Rule>
+  </Style>
+
+  <Layer name="amenity-hospital-polygon">
+    <StyleName>framed-polygon</StyleName>
+    <StyleName>hospital-symbol</StyleName>
+    <Datasource>
+      <Parameter name="table">
+	(SELECT way, 'orange' as color
+           FROM planet_osm_polygon
+          WHERE amenity = 'hospital'
+	) AS way
+      </Parameter>
+      <Parameter name="geometry_field">way</Parameter>
+      &datasource-settings;
+    </Datasource>
+  </Layer>
+
+  <Layer name="amenity-hospital-point">
+    <StyleName>hospital-symbol</StyleName>
+    <Datasource>
+      <Parameter name="table">
+	(SELECT way
+           FROM planet_osm_point
+          WHERE amenity = 'hospital'
+	) AS way
+      </Parameter>
+      <Parameter name="geometry_field">way</Parameter>
+      &datasource-settings;
+    </Datasource>
+  </Layer>
+
+
+  <Style name="emergency-phone-symbol">
+    <Rule>
+      <MarkersSymbolizer file="symbols/emergency_phone.svg" fill="red" />
+    </Rule>
+  </Style>
+
+  <Layer name="emergency-phone">
+    <StyleName>emergency-phone-symbol</StyleName>
+    <Datasource>
+      <Parameter name="table">
+	(SELECT way
+           FROM planet_osm_point
+	   WHERE amenity = 'emergency_phone'
+	   OR tags->'emergency' = 'phone'
+	   OR tags->'emergency' = 'fire_alarm_box'
+	) AS way
+      </Parameter>
+      <Parameter name="geometry_field">way</Parameter>
+      &datasource-settings;
+    </Datasource>
+  </Layer>
+
 
   
 </Map>
