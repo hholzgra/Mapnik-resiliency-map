@@ -8,3 +8,5 @@ A Mapnik map style inspired by the 2019 FOSDEM Geospatial DevRoom presentation o
 https://fosdem.org/2019/schedule/event/geo_osmqgis/
 
 You can create printable maps with this style as an overlay on https://print.get-map.org/
+
+![demo map](demo/SanFrancisco-demo.png)
